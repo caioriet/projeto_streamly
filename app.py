@@ -1,7 +1,6 @@
 import streamlit as st
 import sqlite3
 import pandas as pd
-import plotly.express as px
 
 # --- Configurações da Página ---
 st.set_page_config(page_title="Diversidade em Companhias Abertas", page_icon="📊", layout="wide")
@@ -82,51 +81,91 @@ if page == "Dados":
 elif page == "Estatísticas":
     st.title("Estatísticas de Diversidade")
 
-       # --- Preparação dos Dados (Lógica similar ao `dashboard` do Django) ---
+    # --- Preparação dos Dados (Lógica similar ao `dashboard` do Django) ---
 
     # Distribuição por Gênero
-    genero_data = {
-        'Feminino': df_empregados_genero['Quantidade_Feminino'].sum(),
-        'Masculino': df_empregados_genero['Quantidade_Masculino'].sum(),
-        'Nao_Binario': df_empregados_genero['Quantidade_Nao_Binario'].sum(),
-        'Outros': df_empregados_genero['Quantidade_Outros'].sum(),
-        'Sem_Resposta': df_empregados_genero['Quantidade_Sem_Resposta'].sum()
-    }
+    genero_data = pd.DataFrame({
+        'Gênero': ['Feminino', 'Masculino', 'Nao_Binario', 'Outros', 'Sem_Resposta'],
+        'Quantidade': [df_empregados_genero['Quantidade_Feminino'].sum(),
+                       df_empregados_genero['Quantidade_Masculino'].sum(),
+                       df_empregados_genero['Quantidade_Nao_Binario'].sum(),
+                       df_empregados_genero['Quantidade_Outros'].sum(),
+                       df_empregados_genero['Quantidade_Sem_Resposta'].sum()]
+    })
 
     # Distribuição por Raça
-    raca_data = {
-        'Amarelo': df_empregados_raca['Quantidade_Amarelo'].sum(),
-        'Branco': df_empregados_raca['Quantidade_Branco'].sum(),
-        'Preto': df_empregados_raca['Quantidade_Preto'].sum(),
-        'Pardo': df_empregados_raca['Quantidade_Pardo'].sum(),
-        'Indigena': df_empregados_raca['Quantidade_Indigena'].sum(),
-        'Outros': df_empregados_raca['Quantidade_Outros'].sum(),
-        'Sem_Resposta': df_empregados_raca['Quantidade_Sem_Resposta'].sum()
-        }
+    raca_data = pd.DataFrame({
+        'Raça': ['Amarelo', 'Branco', 'Preto', 'Pardo', 'Indigena', 'Outros', 'Sem_Resposta'],
+        'Quantidade': [df_empregados_raca['Quantidade_Amarelo'].sum(),
+                       df_empregados_raca['Quantidade_Branco'].sum(),
+                       df_empregados_raca['Quantidade_Preto'].sum(),
+                       df_empregados_raca['Quantidade_Pardo'].sum(),
+                       df_empregados_raca['Quantidade_Indigena'].sum(),
+                       df_empregados_raca['Quantidade_Outros'].sum(),
+                       df_empregados_raca['Quantidade_Sem_Resposta'].sum()]
+    })
 
     # Distribuição por Faixa Etária
-    faixa_etaria_data = {
-        'Ate_30': df_empregados_faixa_etaria['Quantidade_Ate30Anos'].sum(),
-        'Entre_30_50': df_empregados_faixa_etaria['Quantidade_30a50Anos'].sum(),
-        'Acima_50': df_empregados_faixa_etaria['Quantidade_Acima50Anos'].sum()
-        }
+    faixa_etaria_data = pd.DataFrame({
+        'Faixa Etária': ['Ate_30', 'Entre_30_50', 'Acima_50'],
+        'Quantidade': [df_empregados_faixa_etaria['Quantidade_Ate30Anos'].sum(),
+                       df_empregados_faixa_etaria['Quantidade_30a50Anos'].sum(),
+                       df_empregados_faixa_etaria['Quantidade_Acima50Anos'].sum()]
+    })
 
     # --- Visualização das Estatísticas ---
 
-    # Distribuição por Gênero
-    st.subheader("Distribuição de Funcionários por Gênero")
-    fig_genero = px.pie(names=list(genero_data.keys()), values=list(genero_data.values()), title='Gênero')
-    st.plotly_chart(fig_genero, use_container_width=True)
+# Distribuição por Gênero
+st.subheader("Distribuição de Funcionários por Gênero")
+st.plotly_chart(
+    {
+        "data": [
+            {
+                "labels": genero_data['Gênero'],
+                "values": genero_data['Quantidade'],
+                "type": "pie",
+                "hole": 0.4,
+            }
+        ],
+        "layout": {"title": "Distribuição por Gênero"},
+    },
+    use_container_width=True,
+)
 
-    # Distribuição por Raça
-    st.subheader("Distribuição de Funcionários por Raça")
-    fig_raca = px.pie(names=list(raca_data.keys()), values=list(raca_data.values()), title='Raça')
-    st.plotly_chart(fig_raca, use_container_width=True)
+# Distribuição por Raça
+st.subheader("Distribuição de Funcionários por Raça")
+st.plotly_chart(
+    {
+        "data": [
+            {
+                "labels": raca_data['Raça'],
+                "values": raca_data['Quantidade'],
+                "type": "pie",
+                "hole": 0.4,
+            }
+        ],
+        "layout": {"title": "Distribuição por Raça"},
+    },
+    use_container_width=True,
+)
 
-    # Distribuição por Faixa Etária
-    st.subheader("Distribuição de Funcionários por Faixa Etária")
-    fig_faixa_etaria = px.pie(names=list(faixa_etaria_data.keys()), values=list(faixa_etaria_data.values()), title='Faixa Etária')
-    st.plotly_chart(fig_faixa_etaria, use_container_width=True)
+# Distribuição por Faixa Etária
+st.subheader("Distribuição de Funcionários por Faixa Etária")
+st.plotly_chart(
+    {
+        "data": [
+            {
+                "labels": faixa_etaria_data['Faixa Etária'],
+                "values": faixa_etaria_data['Quantidade'],
+                "type": "pie",
+                "hole": 0.4,
+            }
+        ],
+        "layout": {"title": "Distribuição por Faixa Etária"},
+    },
+    use_container_width=True,
+)
+
 # --- Rodapé ---
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Desenvolvido por: Caio Riet Barbosa**")
