@@ -81,7 +81,7 @@ if page == "Dados":
 elif page == "Estatísticas":
     st.title("Estatísticas de Diversidade")
 
-    # --- Preparação dos Dados (Lógica similar ao `dashboard` do Django) ---
+    # --- Preparação dos Dados ---
 
     # Distribuição por Gênero
     genero_data = pd.DataFrame({
@@ -115,59 +115,58 @@ elif page == "Estatísticas":
 
     # --- Visualização das Estatísticas ---
 
-# Distribuição por Gênero
-st.subheader("Distribuição de Funcionários por Gênero")
-st.plotly_chart(
-    {
-        "data": [
-            {
-                "labels": genero_data['Gênero'],
-                "values": genero_data['Quantidade'],
-                "type": "pie",
-                "hole": 0.4,
-            }
-        ],
-        "layout": {"title": "Distribuição por Gênero"},
-    },
-    use_container_width=True,
-)
+    # Distribuição por Gênero
+    st.subheader("Distribuição de Funcionários por Gênero")
+    st.plotly_chart(
+        {
+            "data": [
+                {
+                    "labels": genero_data['Gênero'],
+                    "values": genero_data['Quantidade'],
+                    "type": "pie",
+                    "hole": 0.4,
+                }
+            ],
+            "layout": {"title": "Distribuição por Gênero"},
+        },
+        use_container_width=True,
+    )
 
-# Distribuição por Raça
-st.subheader("Distribuição de Funcionários por Raça")
-st.plotly_chart(
-    {
-        "data": [
-            {
-                "labels": raca_data['Raça'],
-                "values": raca_data['Quantidade'],
-                "type": "pie",
-                "hole": 0.4,
-            }
-        ],
-        "layout": {"title": "Distribuição por Raça"},
-    },
-    use_container_width=True,
-)
+    # Distribuição por Raça
+    st.subheader("Distribuição de Funcionários por Raça")
+    st.plotly_chart(
+        {
+            "data": [
+                {
+                    "labels": raca_data['Raça'],
+                    "values": raca_data['Quantidade'],
+                    "type": "pie",
+                    "hole": 0.4,
+                }
+            ],
+            "layout": {"title": "Distribuição por Raça"},
+        },
+        use_container_width=True,
+    )
 
-# Distribuição por Faixa Etária
-st.subheader("Distribuição de Funcionários por Faixa Etária")
-st.plotly_chart(
-    {
-        "data": [
-            {
-                "labels": faixa_etaria_data['Faixa Etária'],
-                "values": faixa_etaria_data['Quantidade'],
-                "type": "pie",
-                "hole": 0.4,
-            }
-        ],
-        "layout": {"title": "Distribuição por Faixa Etária"},
-    },
-    use_container_width=True,
-)
+    # Distribuição por Faixa Etária
+    st.subheader("Distribuição de Funcionários por Faixa Etária")
+    st.plotly_chart(
+        {
+            "data": [
+                {
+                    "labels": faixa_etaria_data['Faixa Etária'],
+                    "values": faixa_etaria_data['Quantidade'],
+                    "type": "pie",
+                    "hole": 0.4,
+                }
+            ],
+            "layout": {"title": "Distribuição por Faixa Etária"},
+        },
+        use_container_width=True,
+    )
 
 # --- Rodapé ---
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Desenvolvido por: Caio Riet Barbosa**")
 st.sidebar.markdown("**Linkedin: https://www.linkedin.com/in/caio-riet-70564b223/**")
-st.sidebar.markdown("**Github: [Caio Riet Barbosa]**")
