@@ -131,4 +131,4 @@ elif page == "Estatísticas":
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Desenvolvido por: Caio Riet Barbosa**")
 st.sidebar.markdown("**Linkedin: https://www.linkedin.com/in/caio-riet-70564b223/**")
-st.sidebar.markdown("**Github: [Caio Riet]**")
+st.sidebar.markdown("**Github: [Caio Riet Barbosa]**")
